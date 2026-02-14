@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Contour LMS",
   description: "Contour LMS",
+  icons: {
+    icon: "https://www.contoureducation.com.au/wp-content/uploads/2020/04/64x64.png",
+  },
 };
 
 export default function RootLayout({

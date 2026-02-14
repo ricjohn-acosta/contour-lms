@@ -32,9 +32,6 @@ export const CustomSidebar = () => {
             className="h-11 w-auto object-contain"
             unoptimized
           />
-          <span className="text-2xl font-bold pl-2 text-blue-500">
-            Dashboard
-          </span>
         </Link>
       </SidebarHeader>
       <SidebarContent>
