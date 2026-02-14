@@ -10,8 +10,6 @@ export default async function Dashboard() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log("user", user);
-
   if (!user) redirect("/");
 
   return (
