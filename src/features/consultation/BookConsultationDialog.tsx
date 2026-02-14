@@ -22,7 +22,7 @@ export const BookConsultationDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default" size="sm">
+        <Button className="bg-blue-400 hover:bg-blue-500" size="sm">
           <PlusIcon className="size-4" />
           Book consultation
         </Button>
@@ -81,7 +81,7 @@ export const BookConsultationDialog = () => {
         </div>
 
         <DialogFooter className="pt-2">
-          <Button variant="default" size="sm">
+          <Button className="bg-blue-400 hover:bg-blue-500" size="sm">
             Book consultation
           </Button>
         </DialogFooter>
