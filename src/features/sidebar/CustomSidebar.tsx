@@ -1,0 +1,60 @@
+import Link from "next/link";
+import Image from "next/image";
+import { MessageSquare } from "lucide-react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarSeparator,
+} from "@/components/ui/sidebar";
+
+const LOGO_URL =
+  "https://www.contoureducation.com.au/wp-content/uploads/2025/11/Contour-Education-Mob-Logo.png";
+
+export const CustomSidebar = () => {
+  return (
+    <Sidebar>
+      <SidebarHeader className="flex h-14 shrink-0 flex-row items-center gap-2 border-b px-4">
+        <Link
+          href="/dashboard"
+          className="flex items-center focus:outline-none"
+        >
+          <Image
+            src={LOGO_URL}
+            alt="Contour Education"
+            width={120}
+            height={44}
+            className="h-11 w-auto object-contain"
+            unoptimized
+          />
+          <span className="text-2xl font-bold pl-2 text-blue-500">
+            Dashboard
+          </span>
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-medium text-gray-500">
+            Home
+          </SidebarGroupLabel>
+
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Consultations">
+                <Link href="/dashboard">
+                  <MessageSquare />
+                  <span>Consultations</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
+};
