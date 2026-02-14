@@ -14,7 +14,7 @@ export default async function Dashboard() {
 
   return (
     <PageWrapper>
-      <ConsultationTableContainer />
+      <ConsultationTableContainer user={user} />
     </PageWrapper>
   );
 }

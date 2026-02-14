@@ -15,55 +15,50 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import type { ConsultationWithTutor } from "@/services/consultation/consultation.service";
 
-export type ConsultationStatus = "Complete" | "Incomplete";
-
-export type ConsultationRow = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  reasonForConsultation: string;
-  status: ConsultationStatus;
-  datetime: string;
-};
-
-const columns: ColumnDef<ConsultationRow>[] = [
+const columns: ColumnDef<ConsultationWithTutor>[] = [
   {
-    accessorKey: "firstName",
+    id: "first_name",
     header: "First Name",
+    accessorFn: (row) => row.tutors?.first_name ?? "—",
   },
   {
-    accessorKey: "lastName",
+    id: "last_name",
     header: "Last Name",
+    accessorFn: (row) => row.tutors?.last_name ?? "—",
   },
   {
-    accessorKey: "reasonForConsultation",
+    accessorKey: "reason",
     header: "Reason for consultation",
+    cell: ({ row }) => row.original.reason ?? "—",
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status") as ConsultationStatus;
+      const status = row.original.status;
+      const isComplete = status?.toLowerCase() === "complete";
       return (
         <span
           className={cn(
             "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
-            status === "Complete"
+            isComplete
               ? "bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-950/30 dark:text-green-400 dark:ring-green-500/30"
               : "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-950/30 dark:text-amber-400 dark:ring-amber-500/30"
           )}
         >
-          {status}
+          {status ?? "—"}
         </span>
       );
     },
   },
   {
-    accessorKey: "datetime",
+    accessorKey: "created_at",
     header: "Consultation date",
     cell: ({ row }) => {
-      const value = row.getValue("datetime") as string;
+      const value = row.original.created_at;
+      if (!value) return "—";
       return new Date(value).toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
@@ -73,32 +68,11 @@ const columns: ColumnDef<ConsultationRow>[] = [
   },
 ];
 
-const defaultData: ConsultationRow[] = [
-  {
-    id: "1",
-    firstName: "Jane",
-    lastName: "Doe",
-    reasonForConsultation: "Follow-up",
-    status: "Complete",
-    datetime: "2025-02-10T14:00:00",
-  },
-  {
-    id: "2",
-    firstName: "John",
-    lastName: "Smith",
-    reasonForConsultation: "Initial assessment",
-    status: "Incomplete",
-    datetime: "2025-02-14T09:30:00",
-  },
-];
+interface ConsultationTableProps {
+  data: ConsultationWithTutor[];
+}
 
-type ConsultationTableProps = {
-  data?: ConsultationRow[];
-};
-
-export const ConsultationTable = ({
-  data = defaultData,
-}: ConsultationTableProps) => {
+export const ConsultationTable = ({ data }: ConsultationTableProps) => {
   const table = useReactTable({
     data,
     columns,
