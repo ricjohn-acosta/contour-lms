@@ -25,7 +25,11 @@ export const AuthForm = () => {
   };
 
   const handleLogin = async () => {
-    await authService.login(email, password);
+    const data = await authService.login(email, password);
+
+    if (data.user) {
+      router.push("/dashboard");
+    }
   };
 
   const handleRegister = async () => {
