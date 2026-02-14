@@ -111,4 +111,6 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - **No `profiles` table:** We are not collecting any information for the student so I opted out on creating a separate table for this and relying on supabase' `getUser()` api for auth session related data
 
+- **Basic RLS:** Only allow users to read/update their own data in the `consultations` table and only allow authenticated users to read data in the `tutors` table
+
 - **Tests**: Unit tests are written with vitest to test the core components. Anything within `/src/components/ui` are all third-party libraries that shouldn't need any testing. Only implementations of these components should be tested
