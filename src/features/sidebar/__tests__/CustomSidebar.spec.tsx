@@ -29,6 +29,12 @@ vi.mock("next/image", () => ({
   },
 }));
 
+// Mock next/navigation for useRouter (used in logout)
+const mockReplace = vi.fn();
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ replace: mockReplace }),
+}));
+
 // Mock useIsMobile so we get desktop sidebar (collapsible div, not Sheet)
 vi.mock("@/hooks/use-mobile", () => ({
   useIsMobile: () => false,
@@ -62,21 +68,20 @@ describe("CustomSidebar", () => {
       const consultationsLinks = screen.getAllByRole("link", {
         name: /consultations/i,
       });
-      expect(consultationsLinks[0]).toHaveAttribute(
-        "href",
-        "/dashboard/consultations"
-      );
+      expect(consultationsLinks[0]).toHaveAttribute("href", "/dashboard");
     });
 
-    it("renders the header with Dashboard link and label", () => {
+    it("renders the header with dashboard link and Home group label", () => {
       renderCustomSidebar();
 
-      const dashboardLinks = screen.getAllByRole("link", {
-        name: /dashboard/i,
+      const logoLinks = screen.getAllByRole("link", {
+        name: /contour education/i,
       });
-      expect(dashboardLinks[0]).toHaveAttribute("href", "/dashboard");
-      const dashboardLabels = screen.getAllByText("Dashboard");
-      expect(dashboardLabels[0]).toBeInTheDocument();
+      expect(logoLinks.length).toBeGreaterThan(0);
+      expect(logoLinks[0]).toHaveAttribute("href", "/dashboard");
+      const homeLabels = screen.getAllByText("Home");
+      expect(homeLabels.length).toBeGreaterThan(0);
+      expect(homeLabels[0]).toBeInTheDocument();
     });
 
     it("renders the logo image in the header", () => {
@@ -86,8 +91,16 @@ describe("CustomSidebar", () => {
       expect(logos[0]).toBeInTheDocument();
       expect(logos[0]).toHaveAttribute(
         "src",
-        "https://www.contoureducation.com.au/wp-content/uploads/2025/11/Contour-Education-Mob-Logo.png"
+        "https://www.contoureducation.com.au/wp-content/uploads/2023/02/Contour-Education-Full-Logo-Single-Line-2048x271-2.png"
       );
+    });
+
+    it("renders the Logout button in the footer", () => {
+      renderCustomSidebar();
+
+      const logoutButtons = screen.getAllByRole("button", { name: /logout/i });
+      expect(logoutButtons.length).toBeGreaterThan(0);
+      expect(logoutButtons[0]).toBeInTheDocument();
     });
   });
 
