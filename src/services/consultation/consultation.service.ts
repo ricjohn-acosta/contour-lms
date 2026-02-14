@@ -18,7 +18,8 @@ export const consultationService = {
     const { data, error } = await supabaseClient()
       .from("consultations")
       .select("*, tutors(id, first_name, last_name)")
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
 
