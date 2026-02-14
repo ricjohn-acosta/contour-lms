@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -32,21 +33,19 @@ type BookConsultationFormValues = {
 };
 
 export const BookConsultationDialog = ({ user }: { user: User }) => {
+  const [open, setOpen] = useState(false);
   const { mutate: createConsultation } = useBookConsultation();
   const { data: tutors, isLoading: isLoadingTutors } = useGetTutors();
 
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<BookConsultationFormValues>({
     defaultValues: { tutor_id: "", reason: "" },
     mode: "onBlur",
   });
-
-  console.log(watch("tutor_id"));
 
   const onSubmit = (data: BookConsultationFormValues) => {
     createConsultation(
@@ -59,6 +58,7 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
         onSuccess: () => {
           toast.success("Consultation booked successfully");
           reset();
+          setOpen(false);
         },
         onError: () => {
           toast.error("Failed to book consultation");
@@ -68,7 +68,7 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="bg-blue-400 hover:bg-blue-500" size="sm">
           <PlusIcon className="size-4" />
