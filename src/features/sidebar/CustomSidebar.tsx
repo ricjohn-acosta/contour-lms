@@ -68,7 +68,7 @@ export const CustomSidebar = () => {
         <SidebarMenuButton asChild tooltip="Logout">
           <Button
             variant="ghost"
-            className="text-red-500"
+            className="text-red-500 hover:text-red-600"
             onClick={handleLogout}
           >
             Logout
