@@ -82,7 +82,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-> **Note:** This setup uses the hosted Supabase project as it is a simple demo project. For a full local Supabase stack (including Docker), use the official Supabase CLI instead.
+> **Note:** This setup uses the hosted Supabase project as it is a simple demo project. For a full local Supabase stack (including Docker), use the official Supabase CLI instead. Happy to provide keys/access to the hosted project on request.
 
 ## Scripts
 
