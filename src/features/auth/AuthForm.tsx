@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { useState } from "react";
+import { authService } from "@/services/auth/auth.service";
+import { useRouter } from "next/navigation";
 
 const LOGO_URL =
   "https://www.contoureducation.com.au/wp-content/uploads/2023/02/Contour-Education-Full-Logo-Single-Line-2048x271-2.png";
@@ -13,10 +14,26 @@ const LOGO_URL =
 type FormType = "login" | "register";
 
 export const AuthForm = () => {
+  const router = useRouter();
+
   const [formType, setFormType] = useState<FormType>("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSwitchFormType = (type: FormType) => {
     setFormType(type);
+  };
+
+  const handleLogin = async () => {
+    await authService.login(email, password);
+  };
+
+  const handleRegister = async () => {
+    const data = await authService.register(email, password);
+
+    if (data.user) {
+      router.push("/dashboard");
+    }
   };
 
   return (
@@ -32,15 +49,26 @@ export const AuthForm = () => {
 
       <div className="grid gap-2">
         <Label>Email</Label>
-        <Input type="email" />
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
 
       <div className="grid gap-2">
         <Label>Password</Label>
-        <Input type="email" />
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
 
-      <Button className="bg-blue-400 hover:bg-blue-500">
+      <Button
+        className="bg-blue-400 hover:bg-blue-500"
+        onClick={formType === "login" ? handleLogin : handleRegister}
+      >
         {formType === "login" ? "Login" : "Register"}
       </Button>
 
