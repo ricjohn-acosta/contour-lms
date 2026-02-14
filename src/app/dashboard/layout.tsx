@@ -5,8 +5,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { CustomSidebar } from "@/features/sidebar/CustomSidebar";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
+import { BookConsultationDialog } from "@/features/consultation/BookConsultationDialog";
 
 export default function DashboardLayout({
   children,
@@ -22,10 +21,7 @@ export default function DashboardLayout({
 
           <div className="flex justify-between items-center w-full">
             <div className="text-2xl font-bold">Your consultations</div>
-            <Button variant="default" size="sm">
-              <PlusIcon className="size-4" />
-              Book consultation
-            </Button>
+            <BookConsultationDialog />
           </div>
         </header>
         {children}
