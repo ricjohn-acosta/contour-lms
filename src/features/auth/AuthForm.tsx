@@ -5,43 +5,57 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { authService } from "@/services/auth/auth.service";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const LOGO_URL =
   "https://www.contoureducation.com.au/wp-content/uploads/2023/02/Contour-Education-Full-Logo-Single-Line-2048x271-2.png";
 
 type FormType = "login" | "register";
 
+type AuthFormValues = {
+  email: string;
+  password: string;
+};
+
 export const AuthForm = () => {
   const router = useRouter();
-
   const [formType, setFormType] = useState<FormType>("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<AuthFormValues>({
+    defaultValues: { email: "", password: "" },
+    mode: "onBlur",
+  });
 
   const handleSwitchFormType = (type: FormType) => {
     setFormType(type);
+    reset();
   };
 
-  const handleLogin = async () => {
-    const data = await authService.login(email, password);
+  const onSubmit = async (values: AuthFormValues) => {
+    const { data, error } =
+      formType === "login"
+        ? await authService.login(values.email, values.password)
+        : await authService.register(values.email, values.password);
 
-    if (data.user) {
-      router.replace("/dashboard");
+    if (error) {
+      toast.error(error);
     }
-  };
 
-  const handleRegister = async () => {
-    const data = await authService.register(email, password);
-
-    if (data.user) {
+    if (data) {
       router.replace("/dashboard");
     }
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Image
         src={LOGO_URL}
         alt="Contour Education"
@@ -52,30 +66,59 @@ export const AuthForm = () => {
       />
 
       <div className="grid gap-2">
-        <Label>Email</Label>
+        <Label htmlFor="email">Email</Label>
         <Input
+          id="email"
           placeholder="Try: admin@contoureducation.com"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Please enter a valid email",
+            },
+          })}
         />
+        {errors.email && (
+          <p className="text-xs text-red-500">{errors.email.message}</p>
+        )}
       </div>
 
       <div className="grid gap-2">
-        <Label>Password</Label>
+        <Label htmlFor="password">Password</Label>
         <Input
+          id="password"
           placeholder="Try: test@TEST1"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          autoComplete={
+            formType === "login" ? "current-password" : "new-password"
+          }
+          {...register("password", {
+            required: "Password is required",
+            ...(formType === "register" && {
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            }),
+          })}
         />
+        {errors.password && (
+          <p className="text-xs text-red-500">{errors.password.message}</p>
+        )}
       </div>
 
       <Button
+        type="submit"
         className="bg-blue-400 hover:bg-blue-500"
-        onClick={formType === "login" ? handleLogin : handleRegister}
+        disabled={isSubmitting}
       >
-        {formType === "login" ? "Login" : "Register"}
+        {isSubmitting
+          ? "Please wait..."
+          : formType === "login"
+          ? "Login"
+          : "Register"}
       </Button>
 
       <div className="text-center text-sm text-gray-500">
@@ -83,6 +126,7 @@ export const AuthForm = () => {
           <div>
             Don't have an account?{" "}
             <Button
+              type="button"
               variant="link"
               className="p-0 pl-1"
               onClick={() => handleSwitchFormType("register")}
@@ -94,6 +138,7 @@ export const AuthForm = () => {
           <div>
             Already have an account?
             <Button
+              type="button"
               variant="link"
               className="p-0 pl-1"
               onClick={() => handleSwitchFormType("login")}
@@ -103,6 +148,6 @@ export const AuthForm = () => {
           </div>
         )}
       </div>
-    </div>
+    </form>
   );
 };
