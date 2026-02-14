@@ -70,8 +70,8 @@ npm install
 Create a `.env` file in the project root with:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://fbnsctxmkzzyqgjncohd.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_jNHGf7WgPHlL_vevMbPQQA_r8deuUB
+NEXT_PUBLIC_SUPABASE_URL=<SUPABASE_URL>
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<PUBLISHABLE_KEY>
 ```
 
 ### 3. Run the app
