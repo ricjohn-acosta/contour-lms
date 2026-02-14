@@ -26,7 +26,7 @@ export const CustomSidebar = () => {
 
   const handleLogout = async () => {
     await authService.logout();
-    router.push("/");
+    router.replace("/");
   };
 
   return (

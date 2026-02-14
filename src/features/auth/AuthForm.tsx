@@ -28,7 +28,7 @@ export const AuthForm = () => {
     const data = await authService.login(email, password);
 
     if (data.user) {
-      router.push("/dashboard");
+      router.replace("/dashboard");
     }
   };
 
@@ -36,7 +36,7 @@ export const AuthForm = () => {
     const data = await authService.register(email, password);
 
     if (data.user) {
-      router.push("/dashboard");
+      router.replace("/dashboard");
     }
   };
 
