@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest"
+    "test": "vitest",
+    "types:generate": "supabase gen types typescript --project-id fbnsctxmkzzyqgjncohd --schema public > src/types/database.types.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
