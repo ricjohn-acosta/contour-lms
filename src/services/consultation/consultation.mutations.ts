@@ -16,3 +16,33 @@ export const useBookConsultation = () => {
     },
   });
 };
+
+export const useMarkConsultationComplete = () => {
+  return useMutation({
+    mutationFn: (consultationId: string) => {
+      return consultationService.updateStatus(consultationId, "complete");
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["consultations"] });
+      toast.success("Consultation marked as complete.");
+    },
+    onError: () => {
+      toast.error("Failed to update consultation.");
+    },
+  });
+};
+
+export const useMarkConsultationIncomplete = () => {
+  return useMutation({
+    mutationFn: (consultationId: string) => {
+      return consultationService.updateStatus(consultationId, "incomplete");
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["consultations"] });
+      toast.success("Consultation marked as incomplete.");
+    },
+    onError: () => {
+      toast.error("Failed to update consultation.");
+    },
+  });
+};

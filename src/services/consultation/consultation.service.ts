@@ -32,4 +32,13 @@ export const consultationService = {
     if (error) throw error;
     return true;
   },
+  updateStatus: async (id: string, status: string) => {
+    const { error } = await supabaseClient()
+      .from("consultations")
+      .update({ status })
+      .eq("id", id);
+
+    if (error) throw error;
+    return true;
+  },
 };

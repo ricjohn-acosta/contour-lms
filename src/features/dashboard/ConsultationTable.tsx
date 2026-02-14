@@ -14,64 +14,117 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import type { ConsultationWithTutor } from "@/services/consultation/consultation.service";
-
-const columns: ColumnDef<ConsultationWithTutor>[] = [
-  {
-    id: "first_name",
-    header: "First Name",
-    accessorFn: (row) => row.tutors?.first_name ?? "—",
-  },
-  {
-    id: "last_name",
-    header: "Last Name",
-    accessorFn: (row) => row.tutors?.last_name ?? "—",
-  },
-  {
-    accessorKey: "reason",
-    header: "Reason for consultation",
-    cell: ({ row }) => row.original.reason ?? "—",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.status;
-      const isComplete = status?.toLowerCase() === "complete";
-      return (
-        <span
-          className={cn(
-            "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
-            isComplete
-              ? "bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-950/30 dark:text-green-400 dark:ring-green-500/30"
-              : "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-950/30 dark:text-amber-400 dark:ring-amber-500/30"
-          )}
-        >
-          {status ?? "—"}
-        </span>
-      );
-    },
-  },
-  {
-    accessorKey: "created_at",
-    header: "Consultation date",
-    cell: ({ row }) => {
-      const value = row.original.created_at;
-      if (!value) return "—";
-      return new Date(value).toLocaleString("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      });
-    },
-  },
-];
+import {
+  useMarkConsultationComplete,
+  useMarkConsultationIncomplete,
+} from "@/services/consultation/consultation.mutations";
+import { MoreHorizontalIcon } from "lucide-react";
 
 interface ConsultationTableProps {
   data: ConsultationWithTutor[];
 }
 
 export const ConsultationTable = ({ data }: ConsultationTableProps) => {
+  const markComplete = useMarkConsultationComplete();
+  const markIncomplete = useMarkConsultationIncomplete();
+
+  const handleMarkAsAction = (consultationId: string, isComplete: boolean) => {
+    if (isComplete) {
+      markIncomplete.mutate(consultationId);
+    } else {
+      markComplete.mutate(consultationId);
+    }
+  };
+
+  const columns: ColumnDef<ConsultationWithTutor>[] = [
+    {
+      id: "first_name",
+      header: "First Name",
+      accessorFn: (row) => row.tutors?.first_name ?? "—",
+    },
+    {
+      id: "last_name",
+      header: "Last Name",
+      accessorFn: (row) => row.tutors?.last_name ?? "—",
+    },
+    {
+      accessorKey: "reason",
+      header: "Reason for consultation",
+      cell: ({ row }) => row.original.reason ?? "—",
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.original.status;
+        const isComplete = status?.toLowerCase() === "complete";
+        const label = isComplete ? "Complete" : "Incomplete";
+        return (
+          <span
+            className={cn(
+              "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
+              isComplete
+                ? "bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-950/30 dark:text-green-400 dark:ring-green-500/30"
+                : "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-950/30 dark:text-amber-400 dark:ring-amber-500/30"
+            )}
+          >
+            {label ?? "—"}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "created_at",
+      header: "Consultation date",
+      cell: ({ row }) => {
+        const value = row.original.created_at;
+        if (!value) return "—";
+        return new Date(value).toLocaleString("en-US", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+      },
+    },
+    {
+      id: "actions",
+      header: "",
+      cell: ({ row }) => {
+        const consultation = row.original;
+        const isComplete = consultation.status?.toLowerCase() === "complete";
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="size-8"
+                aria-label="Open actions menu"
+              >
+                <MoreHorizontalIcon className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onSelect={() => handleMarkAsAction(consultation.id, isComplete)}
+              >
+                {isComplete ? "Mark as incomplete" : "Mark as complete"}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
+
   const table = useReactTable({
     data,
     columns,
