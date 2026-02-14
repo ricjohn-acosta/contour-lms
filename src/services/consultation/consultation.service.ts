@@ -5,6 +5,12 @@ export type ConsultationWithTutor = Tables<"consultations"> & {
   tutors: Tables<"tutors">;
 };
 
+export type ConsultationInsert = {
+  reason: string;
+  user_id: string;
+  tutor_id: string;
+};
+
 export const consultationService = {
   getConsultations: async (
     userId: string
@@ -17,5 +23,13 @@ export const consultationService = {
     if (error) throw error;
 
     return data as ConsultationWithTutor[];
+  },
+  createConsultation: async (consultation: ConsultationInsert) => {
+    const { error } = await supabaseClient()
+      .from("consultations")
+      .insert(consultation);
+
+    if (error) throw error;
+    return true;
   },
 };

@@ -6,12 +6,22 @@ import {
 } from "@/components/ui/sidebar";
 import { CustomSidebar } from "@/features/sidebar/CustomSidebar";
 import { BookConsultationDialog } from "@/features/consultation/BookConsultationDialog";
+import { supabaseServer } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = await supabaseServer();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/");
+
   return (
     <SidebarProvider>
       <CustomSidebar />
@@ -21,7 +31,7 @@ export default function DashboardLayout({
 
           <div className="flex justify-between items-center w-full">
             <div className="text-2xl font-bold">Your consultations</div>
-            <BookConsultationDialog />
+            <BookConsultationDialog user={user} />
           </div>
         </header>
         {children}
