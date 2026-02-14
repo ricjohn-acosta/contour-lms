@@ -25,7 +25,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          id: string
+          id?: string
           reason?: string | null
           status?: string | null
           tutor_id?: string | null
