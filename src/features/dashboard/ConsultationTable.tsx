@@ -62,7 +62,6 @@ const columns: ColumnDef<ConsultationWithTutor>[] = [
       return new Date(value).toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
-        timeZone: "UTC",
       });
     },
   },
