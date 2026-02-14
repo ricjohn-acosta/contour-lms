@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const LOGO_URL =
-  "https://www.contoureducation.com.au/wp-content/uploads/2025/11/Contour-Education-Mob-Logo.png";
+  "https://www.contoureducation.com.au/wp-content/uploads/2023/02/Contour-Education-Full-Logo-Single-Line-2048x271-2.png";
 
 export const CustomSidebar = () => {
   return (
