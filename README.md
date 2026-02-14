@@ -76,7 +76,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - **Assumption:** A `tutor` table links consultations to tutors. It supports loading tutor data from the backend for when the app grows.
 
-- **Assumption:** Consultation reason is hard-coded in the frontend as predefined options (no free-text) to avoid invalid or noisy input.
+- **Assumption:** Consultation reason is hard-coded in the frontend as predefined options (no free-text) to avoid invalid or noisy input. This can be implemented like the `tutor` table later on if we want this to be backend driven.
 
 - **No ORM:** The app uses Supabase’s TypeScript types (which can be found in `/src/types/database.types.ts`) and client queries directly. An ORM could be added as the data layer grows.
 

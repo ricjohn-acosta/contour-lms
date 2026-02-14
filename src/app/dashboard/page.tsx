@@ -1,5 +1,5 @@
 import { ConsultationTableContainer } from "@/features/dashboard/ConsultationTableContainer";
-import { PageWrapper } from "@/components/ui/pageWrapper";
+import { PageWrapper } from "@/components/ui/page-wrapper";
 import { supabaseServer } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
