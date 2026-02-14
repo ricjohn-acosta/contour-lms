@@ -54,6 +54,7 @@ export const AuthForm = () => {
       <div className="grid gap-2">
         <Label>Email</Label>
         <Input
+          placeholder="Try: admin@contoureducation.com"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -63,6 +64,7 @@ export const AuthForm = () => {
       <div className="grid gap-2">
         <Label>Password</Label>
         <Input
+          placeholder="Try: test@TEST1"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
