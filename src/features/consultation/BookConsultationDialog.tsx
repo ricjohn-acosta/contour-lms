@@ -40,6 +40,7 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
   const {
     control,
     handleSubmit,
+    clearErrors,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<BookConsultationFormValues>({
@@ -67,8 +68,16 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
     );
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+    if (!open) {
+      reset();
+      clearErrors();
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="bg-blue-400 hover:bg-blue-500" size="sm">
           <PlusIcon className="size-4" />
