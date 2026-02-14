@@ -25,4 +25,11 @@ export const authService = {
 
     return data;
   },
+  logout: async () => {
+    const { error } = await supabaseClient().auth.signOut();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  },
 };
