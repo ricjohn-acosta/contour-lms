@@ -1,3 +1,10 @@
+import { ConsultationTable } from "@/features/dashboard/ConsultationTable";
+import { PageWrapper } from "@/components/ui/pageWrapper";
+
 export default function Dashboard() {
-  return <div></div>;
+  return (
+    <PageWrapper>
+      <ConsultationTable />
+    </PageWrapper>
+  );
 }
