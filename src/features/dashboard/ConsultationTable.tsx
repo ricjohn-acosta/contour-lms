@@ -64,9 +64,10 @@ const columns: ColumnDef<ConsultationRow>[] = [
     header: "Consultation date",
     cell: ({ row }) => {
       const value = row.getValue("datetime") as string;
-      return new Date(value).toLocaleString(undefined, {
+      return new Date(value).toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
+        timeZone: "UTC",
       });
     },
   },
