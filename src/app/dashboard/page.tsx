@@ -1,10 +1,10 @@
-import { ConsultationTable } from "@/features/dashboard/ConsultationTable";
+import { ConsultationTableContainer } from "@/features/dashboard/ConsultationTableContainer";
 import { PageWrapper } from "@/components/ui/pageWrapper";
 
 export default function Dashboard() {
   return (
     <PageWrapper>
-      <ConsultationTable />
+      <ConsultationTableContainer />
     </PageWrapper>
   );
 }
