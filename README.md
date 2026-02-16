@@ -108,6 +108,8 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - **Assumption 4:** Students are given permissions to mark a consultation as "complete/incomplete" for simplicity. Ideally only tutors/admins should be able to do this. Roles will need to be implemented to achieve this behaviour.
 
+- **Assumption 5:** Students are given the basic ability to choose a date and time for consultation for simplicity. Ideally, this functionality should check against the availability of the tutors.
+
 ### Tech decisions:
 
 - **No global state management:** Since the web app is small and simple. I only opted in for react-query to handle async state which should be enough for an app of this size. A synchronous state manager can be introduced later on for complex UI interactions if needed.
