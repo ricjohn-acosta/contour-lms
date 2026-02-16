@@ -17,7 +17,8 @@ A minimal Learning Management System where students sign in, view their consulta
 - Filter existing consultations based on status (complete/incomplete)
 - Book new consultations with tutors
 - Form validation and minimal UI
-- Auth (login, logout, register)
+- Protected Routes
+- Basic Auth (login, logout, register)
 - Basic RLS for security on supabase tables
 
 ## Technology
