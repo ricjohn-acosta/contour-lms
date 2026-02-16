@@ -32,7 +32,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { format, setHours, setMinutes } from "date-fns";
+import { format, isValid, setHours, setMinutes } from "date-fns";
 import { cn } from "@/lib/utils";
 
 type BookConsultationFormValues = {
@@ -213,7 +213,7 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
                         )}
                       >
                         <CalendarIcon className="mr-2 size-4 shrink-0" />
-                        {field.value ? (
+                        {field.value && isValid(field.value) ? (
                           format(field.value, "PPP 'at' p")
                         ) : (
                           <span>Pick date and time</span>
@@ -224,13 +224,20 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
                       <div className="flex flex-col gap-3 p-3">
                         <Calendar
                           mode="single"
-                          selected={field.value ?? undefined}
+                          selected={
+                            field.value && isValid(field.value)
+                              ? field.value
+                              : undefined
+                          }
                           onSelect={(date) => {
                             if (!date) {
                               field.onChange(undefined);
                               return;
                             }
-                            const existing = field.value;
+                            const existing =
+                              field.value && isValid(field.value)
+                                ? field.value
+                                : undefined;
                             const hours = existing?.getHours() ?? 9;
                             const minutes = existing?.getMinutes() ?? 0;
                             field.onChange(
@@ -254,7 +261,7 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
                             type="time"
                             className="w-full"
                             value={
-                              field.value
+                              field.value && isValid(field.value)
                                 ? format(field.value, "HH:mm")
                                 : "09:00"
                             }
@@ -262,7 +269,10 @@ export const BookConsultationDialog = ({ user }: { user: User }) => {
                               const [hours, minutes] = e.target.value
                                 .split(":")
                                 .map(Number);
-                              const base = field.value ?? new Date();
+                              const base =
+                                field.value && isValid(field.value)
+                                  ? field.value
+                                  : new Date();
                               field.onChange(
                                 setMinutes(setHours(base, hours), minutes)
                               );
