@@ -55,6 +55,7 @@ src/
 │   ├── consultation/       # queries, mutations, service
 │   └── tutors/
 ├── types/                  # Generated Supabase types (database.types.ts)
+├── schema.sql              # Dumped db schema
 ```
 
 ## Getting started
