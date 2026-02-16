@@ -86,7 +86,7 @@ export const ConsultationTable = ({ data }: ConsultationTableProps) => {
       accessorKey: "created_at",
       header: "Consultation date",
       cell: ({ row }) => {
-        const value = row.original.created_at;
+        const value = row.original.scheduled_at;
         if (!value) return "—";
         return new Date(value).toLocaleString("en-US", {
           dateStyle: "medium",
