@@ -40,10 +40,14 @@ vi.mock("@/hooks/use-mobile", () => ({
   useIsMobile: () => false,
 }));
 
+const mockUser = { email: "test@example.com" } as Parameters<
+  typeof CustomSidebar
+>[0]["user"];
+
 function renderCustomSidebar() {
   return render(
     <SidebarProvider>
-      <CustomSidebar />
+      <CustomSidebar user={mockUser} />
     </SidebarProvider>
   );
 }
@@ -101,6 +105,14 @@ describe("CustomSidebar", () => {
       const logoutButtons = screen.getAllByRole("button", { name: /logout/i });
       expect(logoutButtons.length).toBeGreaterThan(0);
       expect(logoutButtons[0]).toBeInTheDocument();
+    });
+
+    it("renders the user email in the footer", () => {
+      renderCustomSidebar();
+
+      const emailElements = screen.getAllByText("test@example.com");
+      expect(emailElements.length).toBeGreaterThan(0);
+      expect(emailElements[0]).toBeInTheDocument();
     });
   });
 

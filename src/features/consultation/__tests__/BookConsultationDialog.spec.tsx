@@ -99,13 +99,16 @@ describe("BookConsultationDialog", () => {
   });
 
   describe("form", () => {
-    it("shows tutor and reason selects when dialog is open", () => {
+    it("shows tutor, reason, and date/time when dialog is open", () => {
       renderDialog();
       fireEvent.click(getTriggerButton());
 
       expect(screen.getByLabelText(/choose a tutor/i)).toBeInTheDocument();
       expect(
         screen.getByLabelText(/reason for consultation/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/consultation date.*time/i)
       ).toBeInTheDocument();
     });
 
@@ -132,6 +135,9 @@ describe("BookConsultationDialog", () => {
 
       expect(screen.getByText("Please select a tutor")).toBeInTheDocument();
       expect(screen.getByText("Please select a reason")).toBeInTheDocument();
+      expect(
+        screen.getByText("Please pick a date and time")
+      ).toBeInTheDocument();
       expect(mockMutate).not.toHaveBeenCalled();
     });
   });

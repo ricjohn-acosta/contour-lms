@@ -18,6 +18,7 @@ function makeConsultation(
 ): ConsultationWithTutor {
   return {
     id: "consult-1",
+    scheduled_at: "2025-02-10T14:30:00Z",
     created_at: "2025-02-10T14:30:00Z",
     reason: "Homework help",
     status: "incomplete",
@@ -123,8 +124,8 @@ describe("ConsultationTable", () => {
       expect(cells.length).toBeGreaterThanOrEqual(1);
     });
 
-    it("renders em dash for missing created_at", () => {
-      const { scope } = renderTable([makeConsultation({ created_at: "" })]);
+    it("renders em dash for missing consultation date (scheduled_at)", () => {
+      const { scope } = renderTable([makeConsultation({ scheduled_at: "" })]);
 
       expect(scope.getByText("—")).toBeInTheDocument();
     });
