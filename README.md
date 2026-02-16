@@ -103,9 +103,9 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - **Assumption:** Consultation reason is hard-coded in the frontend as predefined options (no free-text) to avoid invalid or noisy input. This can be implemented like the `tutor` table later on if we want this to be backend driven.
 
-- **No state management:** Since the web app is small and simple. I only opted in for react-query to handle async state which should be enough for this an app of this size.
+- **No state management:** Since the web app is small and simple. I only opted in for react-query to handle async state which should be enough for this an app of this size. A synchronous state manager can be introduced later on for complex UI interactions if needed.
 
-- **No ORM:** The app uses Supabase’s TypeScript types (which can be found in `/src/types/database.types.ts`) and client queries directly. An ORM could be added as the data layer grows.
+- **No ORM:** The app uses Supabase’s TypeScript types (which can be found in `/src/types/database.types.ts`) and client queries directly. An ORM could be added as the data layer grows to make db calls more organised and standardised.
 
 - **No auth provider:** Auth state is passed from the root layout into client components for simplicity. Introducing a provider is a good next step as the component tree expands.
 
