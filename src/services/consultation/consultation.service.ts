@@ -9,6 +9,7 @@ export type ConsultationInsert = {
   reason: string;
   user_id: string;
   tutor_id: string;
+  scheduled_at?: string;
 };
 
 export const consultationService = {
