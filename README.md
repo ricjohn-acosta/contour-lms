@@ -107,7 +107,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - **No ORM:** The app uses Supabase’s TypeScript types (which can be found in `/src/types/database.types.ts`) and client queries directly. An ORM could be added as the data layer grows to make db calls more organised and standardised.
 
-- **No auth provider:** Auth state is passed from the root layout into client components for simplicity. Introducing a provider is a good next step as the component tree expands.
+- **No auth context provider:** Auth state is passed from the root layout into client components for simplicity. Introducing a provider is a good next step as the component tree expands.
 
 - **No `profiles` table:** We are not collecting any information for the student so I opted out on creating a separate table for this and relying on supabase' `getUser()` api for auth session related data
 
