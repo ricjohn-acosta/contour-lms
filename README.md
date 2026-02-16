@@ -55,7 +55,6 @@ src/
 │   ├── consultation/       # queries, mutations, service
 │   └── tutors/
 ├── types/                  # Generated Supabase types (database.types.ts)
-└── supabase/               # Supabase config (e.g. migrations)
 ```
 
 ## Getting started
