@@ -110,7 +110,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Tech decisions:
 
-- **No state management:** Since the web app is small and simple. I only opted in for react-query to handle async state which should be enough for this an app of this size. A synchronous state manager can be introduced later on for complex UI interactions if needed.
+- **No state management:** Since the web app is small and simple. I only opted in for react-query to handle async state which should be enough for an app of this size. A synchronous state manager can be introduced later on for complex UI interactions if needed.
 
 - **No ORM:** The app uses Supabase’s TypeScript types (which can be found in `/src/types/database.types.ts`) and client queries directly. An ORM could be added as the data layer grows to make db calls more organised and standardised.
 
