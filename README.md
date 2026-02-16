@@ -98,11 +98,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Design notes (assumptions/justifications)
 
-- **Assumption:** The app is for **students** who want to book consultations with **tutors**
+### Assumptions:
 
-- **Assumption:** A `tutor` table links consultations to tutors. It supports loading tutor data from the backend for when the app grows.
+- **Assumption 1:** The app is for **students** who want to book consultations with **tutors**
 
-- **Assumption:** Consultation reason is hard-coded in the frontend as predefined options (no free-text) to avoid invalid or noisy input. This can be implemented like the `tutor` table later on if we want this to be backend driven.
+- **Assumption 2:** The list of tutors that students can choose to consult with is backend-driven. It supports loading tutor data from the backend for when the app grows.
+
+- **Assumption 3:** Consultation reasons are hard-coded in the frontend as predefined options (no free-text) to avoid invalid or noisy input. If needed, this can be backend driven for when the app grows.
+
+- **Assumption 4:** Students are given permissions to mark a consultation as "complete/incomplete" for simplicity. Ideally only tutors/admins should be able to do this. Roles will need to be implemented to achieve this behaviour.
+
+### Tech decisions:
 
 - **No state management:** Since the web app is small and simple. I only opted in for react-query to handle async state which should be enough for this an app of this size. A synchronous state manager can be introduced later on for complex UI interactions if needed.
 
